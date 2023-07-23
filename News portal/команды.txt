@@ -1,0 +1,41 @@
+python manage.py shell
+from news.models import *
+
+
+u1 = User.objects.create_user('User1')
+u2 = User.objects.create_user('User2')
+
+
+a1 = Author.objects.create(author_User = u1)
+a2 = Author.objects.create(author_User = u2)
+
+                          # не пойму почему id не по порядку
+c1 = Category.objects.create(name_Category = 'Спорт')
+c2 = Category.objects.create(name_Category = 'Политика')
+c3 = Category.objects.create(name_Category = 'Образование')
+c4 = Category.objects.create(name_Category = 'Работа')
+
+                                 # не пойму почему id не по порядку
+p1 = Post.objects.create(field_choice = 'AR', heading = 'Как не спать еще пол часика', text_article = 'Включите яркий свет: это будет сигналом для вашего мозга, что за окном не ночное время суток', post = a1, rating_article = 0)
+p2 = Post.objects.create(field_choice = 'AR', heading = 'Очень спать хочу', text_article = 'Лупани кофе', post = a2, rating_article = 1)
+p3 = Post.objects.create(field_choice = 'NE', heading = 'Главное не.....', text_article = 'спааать', post = a2, rating_article = 3)
+
+
+Post.objects.get(id=3).post_in.add(Category.objects.get(id=5))
+Post.objects.get(id=4).post_in.add(Category.objects.get(id=6))
+Post.objects.get(id=5).post_in.add(Category.objects.get(id=7))
+Post.objects.get(id=3).post_in.add(Category.objects.get(id=8))
+
+
+Comment.objects.create(comment=Post.objects.get(id=3), comment_user=Author.objects.get(id=4).author_User, text_coment='нормуль1', comment_rating = 4)
+Comment.objects.create(comment=Post.objects.get(id=4), comment_user=Author.objects.get(id=5).author_User, text_coment='нормуль2', comment_rating = 3)
+Comment.objects.create(comment=Post.objects.get(id=5), comment_user=Author.objects.get(id=4).author_User, text_coment='нормуль3', comment_rating = 2)
+Comment.objects.create(comment=Post.objects.get(id=5), comment_user=Author.objects.get(id=5).author_User, text_coment='нормуль4', comment_rating = 1)
+
+
+Comment.objects.get(id=4).like()
+Comment.objects.get(id=4).like()
+Comment.objects.get(id=4).like()
+Comment.objects.get(id=4).dislike()
+Comment.objects.get(id=1).dislike()
+Comment.objects.get(id=3).like()
