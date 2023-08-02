@@ -1,0 +1,42 @@
+{% extends 'flatpages/default.html' %}
+{% load custom_filters %}
+{% load custom_tags %}
+{% block title %}
+Posts
+{% endblock title %}
+
+{% block content %}
+   <h1>Все новости</h1>
+   <h3>{% current_time '%b %d %Y' %}</h3>
+   <h3> {{ next_sale|default_if_none:"скоро выйдут строчные новости!" }} </h3>
+   <hr>
+   {% if posts %}
+       <table>
+           <tr>
+               <td>поле</td>
+               <td>выбор</td>
+               <td>время</td>
+               <td>публикация</td>
+               <td>заголовок</td>
+               <td>текст</td>
+               <td>рейтинг</td>
+           </tr>
+
+           {% for post in post %}
+           <tr>
+
+               <td>{{ post.post }}</td>
+               <td>{{ post.field_choice }}</td>
+               <td>{{ post.time_Post }}</td>
+               <td>{{ post.post_in }}</td>
+               <td>{{ post.heading|currency }}</td>
+               <td>{{ post.text_article|truncatechars:5 }}</td>
+               <td>{{ post.rating_article }}</td>
+           </tr>
+           {% endfor %}
+
+       </table>
+   {% else %}
+       <h2>Новостей нет!</h2>
+   {% endif %}
+{% endblock content %}
