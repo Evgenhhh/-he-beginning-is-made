@@ -1,0 +1,22 @@
+{% extends "main.html" %}
+
+{% block content %}
+<h2> Войти в систему </h2>
+<from method = "post" action = "{% url 'login' %}">
+{% csrf_token %}
+<table>
+<tr>
+    <td>{{ from.username.laber_tag }}</td>
+    <td>{{ from.username }}</td>
+</tr>
+
+<tr>
+    <td>{{ from.password.label_tag }} </td>
+    <td>{{ from.password }}</td>
+</tr>
+</table>
+
+<input type = "submit" value="Войти">
+</from>
+<button><a href="/sign/signup"> Регистрация </a> </button>
+{% endblock %}
